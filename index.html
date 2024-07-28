@@ -15,6 +15,7 @@
       }
       body {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
@@ -25,10 +26,14 @@
       canvas {
         border: 1px solid black;
       }
+      .skor {
+        font-size: 24px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
-    <div id="skor"></div>
+    <div class="skor">Skor: <span id="skor" class="skor"></span></div>
   <canvas id="myCanvas" width="600" height="600"></canvas>
   <audio controls id="audio" class="hidden">
     <source src="hit.mp3" type="audio/mpeg">
