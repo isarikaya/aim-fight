@@ -15,7 +15,7 @@ function drawRandomCircle() {
 
   const x = getRandomInt(0, canvas.width)
   const y = getRandomInt(0, canvas.height)
-  const radius = 32
+  const radius = 8
   const color = `rgb(56, 235, 255)`
 
   circle = { x, y, radius }
