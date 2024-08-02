@@ -28,7 +28,7 @@ function drawRandomCircle() {
   ctx.fill()
   ctx.closePath()
 
-  timeoutId = setTimeout(drawRandomCircle, 1250)
+  timeoutId = setTimeout(drawRandomCircle, 750)
 }
 const audio = document.getElementById("audio")
 const playBell = () => {
