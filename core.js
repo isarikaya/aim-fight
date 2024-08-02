@@ -1,3 +1,4 @@
+console.log("init core.js")
 const canvas = document.getElementById("myCanvas")
 let skor = document.getElementById("skor")
 const ctx = canvas.getContext("2d")
@@ -15,7 +16,7 @@ function drawRandomCircle() {
 
   const x = getRandomInt(0, canvas.width)
   const y = getRandomInt(0, canvas.height)
-  const radius = 8
+  const radius = 32
   const color = `rgb(56, 235, 255)`
 
   circle = { x, y, radius }
@@ -27,7 +28,7 @@ function drawRandomCircle() {
   ctx.fill()
   ctx.closePath()
 
-  timeoutId = setTimeout(drawRandomCircle, 2000)
+  timeoutId = setTimeout(drawRandomCircle, 1250)
 }
 const audio = document.getElementById("audio")
 const playBell = () => {
