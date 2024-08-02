@@ -20,7 +20,6 @@ function drawRandomCircle() {
   const color = `rgb(56, 235, 255)`
 
   circle = { x, y, radius }
-  console.log('circle', circle)
 
   ctx.beginPath()
   ctx.arc(x, y, radius, 0, Math.PI * 2, false)
