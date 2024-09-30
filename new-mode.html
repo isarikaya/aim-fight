@@ -33,7 +33,6 @@
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         let score = 0;
         const balls = [];
         const popTexts = [];
@@ -48,6 +47,11 @@
                 this.y = Math.random() * (canvas.height - this.radius * 2) + this.radius;
                 this.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
                 this.innerRadius = this.radius * 0.6;
+
+                this.outerRadius = this.radius * 2;
+                this.outerAlpha = 1; // Şeffaflık başlangıçta tam görünebilir
+                this.outerShrinkSpeed = 0.00000005;
+                
             }
 
             draw() {
@@ -62,6 +66,19 @@
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
                 ctx.fill();
                 ctx.closePath();
+
+                if (this.outerRadius > this.radius) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.outerRadius, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${this.outerAlpha})`;
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                    ctx.closePath();
+
+                    // Çember küçülüyor ve şeffaflaşıyor
+                    this.outerRadius -= 1;
+                    this.outerAlpha -= this.outerShrinkSpeed;
+                }
             }
         }
 
