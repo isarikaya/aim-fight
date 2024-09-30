@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zamanlı Top Oyunu</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #1a1a1a; }
+        canvas { display: block; }
+        #gameOver { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: white;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="gameOver">Oyun Bitti!</div>
+
+    <!-- Tıklama sesi -->
+    <audio id="clickSound" src="new-sound.wav"></audio>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameOverText = document.getElementById('gameOver');
+        const clickSound = document.getElementById('clickSound'); // Ses elementi
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let score = 0;
+        const balls = [];
+        const popTexts = [];
+        const explosionParticles = []; // Patlama parçacıkları
+        let timeLeft = 60; // 60 saniyelik oyun süresi
+        let gameActive = true;
+
+        class Ball {
+            constructor() {
+                this.radius = 30;
+                this.x = Math.random() * (canvas.width - this.radius * 2) + this.radius;
+                this.y = Math.random() * (canvas.height - this.radius * 2) + this.radius;
+                this.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                this.innerRadius = this.radius * 0.6;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.innerRadius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        class PopText {
+            constructor(x, y, points) {
+                this.x = x;
+                this.y = y;
+                this.points = points;
+                this.alpha = 1;
+                this.speed = 1;
+            }
+
+            draw() {
+                ctx.font = 'bold 24px Arial';
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctx.fillText(`+${this.points}`, this.x, this.y);
+            }
+
+            update() {
+                this.y -= this.speed;
+                this.alpha -= 0.02;
+                if (this.alpha <= 0) {
+                    const index = popTexts.indexOf(this);
+                    if (index > -1) {
+                        popTexts.splice(index, 1);
+                    }
+                }
+            }
+        }
+
+        class ExplosionParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.radius = Math.random() * 5 + 2;
+                this.color = color;
+                this.alpha = 1;
+                this.speedX = (Math.random() - 0.5) * 4;
+                this.speedY = (Math.random() - 0.5) * 4;
+                this.fadeSpeed = 0.03;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+                ctx.restore();
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= this.fadeSpeed;
+                if (this.alpha <= 0) {
+                    const index = explosionParticles.indexOf(this);
+                    if (index > -1) {
+                        explosionParticles.splice(index, 1);
+                    }
+                }
+            }
+        }
+
+        function spawnBall() {
+            if (balls.length < 10) {
+                balls.push(new Ball());
+            }
+        }
+
+        function drawScore() {
+            ctx.font = 'bold 28px Arial';
+            ctx.fillStyle = 'white';
+            ctx.fillText(`Puan: ${score}`, 20, 40);
+        }
+
+        function drawTimer() {
+            ctx.font = 'bold 28px Arial';
+            ctx.fillStyle = 'white';
+            ctx.fillText(`Süre: ${timeLeft}`, canvas.width - 150, 40);
+        }
+
+        function animate() {
+            if (!gameActive) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            balls.forEach(ball => {
+                ball.draw();
+            });
+
+            popTexts.forEach(text => {
+                text.draw();
+                text.update();
+            });
+
+            explosionParticles.forEach(particle => {
+                particle.draw();
+                particle.update();
+            });
+
+            drawScore();
+            drawTimer();
+
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('click', (event) => {
+            if (!gameActive) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            balls.forEach((ball, index) => {
+                const distance = Math.sqrt((x - ball.x) ** 2 + (y - ball.y) ** 2);
+                if (distance < ball.radius) {
+                    let points;
+                    if (distance < ball.innerRadius) {
+                        points = 10;
+                    } else {
+                        points = 5;
+                    }
+                    score += points;
+                    popTexts.push(new PopText(ball.x, ball.y, points));
+                    balls.splice(index, 1);
+                    spawnBall();
+
+                    // Top patlama animasyonu için parçacıklar oluştur
+                    for (let i = 0; i < 8; i++) {
+                        explosionParticles.push(new ExplosionParticle(ball.x, ball.y, ball.color));
+                    }
+
+                    // Topa tıklama sesi oynatılıyor
+                    clickSound.currentTime = 0; // Sesin baştan başlamasını sağla
+                    clickSound.play();
+                }
+            });
+        });
+
+        function startGame() {
+            for (let i = 0; i < 10; i++) {
+                spawnBall();
+            }
+
+            animate();
+
+            const timer = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
+                    gameOverText.style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        startGame();
+    </script>
+</body>
+</html>
