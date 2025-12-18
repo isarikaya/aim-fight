@@ -1,6 +1,7 @@
-console.log("init core.js")
+'use strict'
+
 const canvas = document.getElementById("myCanvas")
-let skor = document.getElementById("skor")
+const skor = document.getElementById("skor")
 const ctx = canvas.getContext("2d")
 
 skor.textContent = 0
@@ -14,9 +15,9 @@ function getRandomInt(min, max) {
 function drawRandomCircle() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  const x = getRandomInt(0, canvas.width)
-  const y = getRandomInt(0, canvas.height)
   const radius = 32
+  const x = getRandomInt(radius, canvas.width - radius)
+  const y = getRandomInt(radius, canvas.height - radius)
   const color = `rgb(56, 235, 255)`
 
   circle = { x, y, radius }
@@ -31,11 +32,13 @@ function drawRandomCircle() {
 }
 const audio = document.getElementById("audio")
 const playBell = () => {
+  if (!audio) return
   audio.currentTime = 0
   audio.play()
 }
 
 const stopBell = () => {
+  if (!audio) return
   audio.pause()
   audio.currentTime = 0
 }
@@ -44,8 +47,6 @@ function checkClick(event) {
   const rect = canvas.getBoundingClientRect()
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
-  console.log('x', x)
-  console.log('y', y)
   const distance = Math.sqrt((x - circle.x) ** 2 + (y - circle.y) ** 2)
   if (distance <= circle.radius) {
     playBell()
@@ -55,6 +56,6 @@ function checkClick(event) {
   }
 }
 
-canvas.addEventListener("click", checkClick)
+canvas.addEventListener("pointerdown", checkClick, { passive: true })
 
 drawRandomCircle()
