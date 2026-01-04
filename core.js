@@ -17,7 +17,7 @@ function drawRandomCircle() {
   const x = getRandomInt(0, canvas.width)
   const y = getRandomInt(0, canvas.height)
   const radius = 32
-  const color = `rgb(56, 235, 255)`
+  const color = `#FFA07A` // turuncu rengini degistirdim
 
   circle = { x, y, radius }
 
