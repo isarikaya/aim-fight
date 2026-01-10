@@ -1,6 +1,22 @@
 {
   "private": true,
+  "name": "aim-fight",
+  "description": "Aim Fight",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vercel dev"
+  },
   "dependencies": {
     "@vercel/edge": "^0.1.2"
+  },
+  "keywords": ["aim", "fight"],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isarikaya/aim-fight.git"
+  },
+  "bugs": {
+    "url": "https://github.com/isarikaya/aim-fight/issues"
   }
 }
