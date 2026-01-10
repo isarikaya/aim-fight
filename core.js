@@ -47,7 +47,7 @@ function checkClick(event) {
   console.log('x', x)
   console.log('y', y)
   const distance = Math.sqrt((x - circle.x) ** 2 + (y - circle.y) ** 2)
-  if (distance <= circle.radius) {
+  if (distance <= circle.radius && x > 0 && x < canvas.width && y > 0 && y < canvas.height) {
     playBell()
     skor.textContent = parseInt(skor.textContent) + 1
     clearTimeout(timeoutId)
