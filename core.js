@@ -17,7 +17,7 @@ function drawRandomCircle() {
   const x = getRandomInt(0, canvas.width)
   const y = getRandomInt(0, canvas.height)
   const radius = 32
-  const color = `rgb(56, 235, 255)`
+  const color = getRandomColor() // <--- ADDED RANDOM COLOR FUNCTION
 
   circle = { x, y, radius }
 
@@ -56,5 +56,12 @@ function checkClick(event) {
 }
 
 canvas.addEventListener("click", checkClick)
+
+function getRandomColor() { // <--- ADDED RANDOM COLOR FUNCTION
+  const r = getRandomInt(0, 255)
+  const g = getRandomInt(0, 255)
+  const b = getRandomInt(0, 255)
+  return `rgb(${r}, ${g}, ${b})`
+}
 
 drawRandomCircle()
