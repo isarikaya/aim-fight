@@ -1,6 +1,15 @@
 {
+  "name": "aim-fight",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@vercel/edge": "^0.1.2"
+    "@vercel/edge": "^0.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "scripts": {
+    "start": "vercel dev",
+    "build": "vercel build",
+    "preview": "vercel preview"
   }
 }
