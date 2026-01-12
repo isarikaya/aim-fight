@@ -1,5 +1,17 @@
 {
   "private": true,
+  "name": "aim-fight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "vercel dev",
+    "build": "vercel build",
+    "deploy": "vercel deploy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@vercel/edge": "^0.1.2"
   }
