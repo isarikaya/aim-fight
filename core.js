@@ -6,6 +6,7 @@ const ctx = canvas.getContext("2d")
 skor.textContent = 0
 let circle = {}
 let timeoutId
+let currentTime = new Date().toLocaleTimeString()
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -56,5 +57,14 @@ function checkClick(event) {
 }
 
 canvas.addEventListener("click", checkClick)
+document.addEventListener("DOMContentLoaded", () => {
+  const clockElement = document.getElementById("clock");
+  if (clockElement) {
+    setInterval(() => {
+      currentTime = new Date().toLocaleTimeString();
+      clockElement.textContent = currentTime;
+    }, 1000);
+  }
+})
 
 drawRandomCircle()
