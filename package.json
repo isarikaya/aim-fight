@@ -1,6 +1,16 @@
 {
   "private": true,
+  "name": "isarikaya/aim-fight",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
   "dependencies": {
     "@vercel/edge": "^0.1.2"
-  }
+  },
+  "keywords": [],
+  "author": "Isa",
+  "license": "MIT"
 }
