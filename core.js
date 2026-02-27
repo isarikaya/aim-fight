@@ -1,10 +1,10 @@
-console.log("init")
+console.log("init_01")
 const canvas = document.getElementById("myCanvas")
 let skor = document.getElementById("skor")
 const ctx = canvas.getContext("2d")
 
 skor.textContent = 0
-let circle = {}
+let circle = {};
 let timeoutId
 
 function getRandomInt(min, max) {
@@ -39,7 +39,7 @@ const stopBell = () => {
   audio.pause()
   audio.currentTime = 0
 }
-
+//test
 function checkClick(event) {
   const rect = canvas.getBoundingClientRect()
   const x = event.clientX - rect.left
@@ -54,6 +54,7 @@ function checkClick(event) {
     drawRandomCircle()
   }
 }
+//test-2
 
 canvas.addEventListener("click", checkClick)
 
