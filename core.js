@@ -1,4 +1,4 @@
-console.log("init_01")
+console.log("modified_files")
 const canvas = document.getElementById("myCanvas")
 let skor = document.getElementById("skor")
 const ctx = canvas.getContext("2d")
