@@ -1,4 +1,4 @@
-console.log("init core.js")
+console.log("init")
 const canvas = document.getElementById("myCanvas")
 let skor = document.getElementById("skor")
 const ctx = canvas.getContext("2d")
