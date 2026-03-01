@@ -4,15 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script defer src="/_vercel/insights/script.js"></script>
-    <title>modified_files</title>
+
+    <title>Aim Fight</title>
+
     <meta
       name="description"
       content="High-performance HTML based website template."
     />
+
     <style>
       .hidden {
         display: none;
       }
+
       body {
         display: flex;
         flex-direction: column;
@@ -23,21 +27,33 @@
         background-color: #f0f0f0;
         cursor: crosshair;
       }
+
       canvas {
         border: 1px solid black;
       }
+
       .skor {
         font-size: 24px;
         font-weight: bold;
       }
+
+      .target {
+        fill: red;
+      }
     </style>
   </head>
+
   <body>
-    <div class="skor">Skor: <span id="skor" class="skor"></span></div>
-  <canvas id="myCanvas" width="600" height="600"></canvas>
-  <audio controls id="audio" class="hidden">
-    <source src="new-sound.wav" type="audio/mpeg">
-  </audio>
-  <script src="core.js"></script>
+    <div class="skor">
+      Skor: <span id="skor" class="skor"></span>
+    </div>
+
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+
+    <audio controls id="audio" class="hidden">
+      <source src="new-sound.wav" type="audio/mpeg" />
+    </audio>
+
+    <script src="core.js"></script>
   </body>
 </html>
