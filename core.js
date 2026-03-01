@@ -1,10 +1,12 @@
-console.log("modified_files")
+console.log("Aim Fight")
+
 const canvas = document.getElementById("myCanvas")
 let skor = document.getElementById("skor")
 const ctx = canvas.getContext("2d")
 
 skor.textContent = 0
-let circle = {};
+
+let circle = {}
 let timeoutId
 
 function getRandomInt(min, max) {
@@ -17,7 +19,7 @@ function drawRandomCircle() {
   const x = getRandomInt(0, canvas.width)
   const y = getRandomInt(0, canvas.height)
   const radius = 32
-  const color = `rgb(56, 235, 255)`
+  const color = `rgb(255, 0, 0)`
 
   circle = { x, y, radius }
 
@@ -29,7 +31,9 @@ function drawRandomCircle() {
 
   timeoutId = setTimeout(drawRandomCircle, 750)
 }
+
 const audio = document.getElementById("audio")
+
 const playBell = () => {
   audio.currentTime = 0
   audio.play()
@@ -39,14 +43,20 @@ const stopBell = () => {
   audio.pause()
   audio.currentTime = 0
 }
+
 //test
 function checkClick(event) {
   const rect = canvas.getBoundingClientRect()
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
-  console.log('x', x)
-  console.log('y', y)
-  const distance = Math.sqrt((x - circle.x) ** 2 + (y - circle.y) ** 2)
+
+  console.log("x", x)
+  console.log("y", y)
+
+  const distance = Math.sqrt(
+    (x - circle.x) ** 2 + (y - circle.y) ** 2
+  )
+
   if (distance <= circle.radius) {
     playBell()
     skor.textContent = parseInt(skor.textContent) + 1
@@ -54,6 +64,7 @@ function checkClick(event) {
     drawRandomCircle()
   }
 }
+
 //test-2
 
 canvas.addEventListener("click", checkClick)
