@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zamanlı Top Oyunu</title>
+    <title>Aim Fight</title>
     <style>
         body { margin: 0; overflow: hidden; background-color: #1a1a1a; }
         canvas { display: block; }
@@ -45,7 +45,7 @@
                 this.radius = 30;
                 this.x = Math.random() * (canvas.width - this.radius * 2) + this.radius;
                 this.y = Math.random() * (canvas.height - this.radius * 2) + this.radius;
-                this.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                this.color = 'red'; // Topun rengi kırmızı olarak ayarlandı
                 this.innerRadius = this.radius * 0.6;
 
                 this.outerRadius = this.radius * 2;
